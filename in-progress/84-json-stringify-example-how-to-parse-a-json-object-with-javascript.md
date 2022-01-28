@@ -2,17 +2,17 @@
 
 ملفات الـJSON، او ما يطلق عليها ترميز الكائنات باستعمال جافا سكريبت "JavaScript Object Notation"، تحيط بنا فى كل مكان. اذا استخدمت تطبيق ويب، فهناك احتمال كبير انه يستخدم هذه التقنية بالفعل لهيكلة، تخزين و التخاطب بين الخوادم و حاسوبك الشخصي.
 
-فى هذا المقال، سوف نتحدث بشكل مختصر عن الاختلافات بين ملفات الـJSON  وجافا سكريبت، وبعدها سوف ننتقل الى طرق التحويل "parse" ملفات  الـJSON   باستعمال جافا سكريبت و بيئة تشغيل الجافا سكريبت الـNode.js. 
+فى هذا المقال، سوف نتحدث بشكل مختصر عن الاختلافات بين ملفات الـJSON  وجافا سكريبت، وبعدها سوف ننتقل الى طرق التحويل "parse" ملفات  الـJSON   باستعمال جافا سكريبت و بيئة تشغيل الجافا سكريبت الـNode.js.
 
-## Differences between JSON and JavaScript
+## الاختلافات بين JSON و جافاسكريبت
 
-While JSON looks like regular JavaScript, it's better to think of JSON as a data format, similar to a text file. It just so happens that JSON is inspired by JavaScript syntax, which is why they look so similar.
+بينما يبدو شكل JSON فى الكتابة مشابه لجافاسكريبت ،لكن الأفضل التفكير في صيغة JSON  على انها نظام تنسيق منظم للبيانات ، مشابه لنظام تنسيق الملفات النصية العادية. يتصادف الامر ان كتابة JSON مستوحاة من طريقة كتابة "syntax" الـJavaScript ، وهذا هو ما يوضح أنها تبدو متشابهة جدًا.
 
-Let's take a look at JSON objects and JSON arrays and compare them to their JavaScript counterparts.
+دعنا الان نلقى نظرة على طريقة كتابة كل من الكائنات "objects" والمصفوفات "arrays" فى الـJSON  ونقارنها بنظريه الـجافاسكريبت
 
-### JSON objects vs JavaScript Object Literals
+### طريقة كتابة الكائنات "objects" فى الـجافاسكريبت مقابل الـJSON
 
-First, here's a JSON object:
+اولا: طريقة الـJSON
 
 ```json
 {
@@ -23,13 +23,13 @@ First, here's a JSON object:
 
 ```
 
-jane-profile.json
+ملف jane-profile.json
 
-The main difference between a JSON object and a regular JavaScript object – also called an object literal – comes down to the quotation marks. All the keys and string type values in a JSON object have to be wrapped in double quotation marks (`"`).
+الاختلاف الرئيسي بين JSON و جافاسكريبت فى طريقة الكتابة - أيضًا تسمى بالطريقة الحرفية لكتابة الكائن "object literal" - تتلخص فى علامات الاقتباس "quotation marks". يجب احاطة جميع المفاتيح "keys" السلاسل النصية "string" في طريقة كتابة كائن الـJSON بعلامات اقتباس مزدوجة (`"`).
 
-JavaScript object literals are a bit more flexible. With object literals, you don't need to wrap keys and strings in double quotation marks. Instead, you could use single quotation marks (`'`), or not use any type of quotation mark for the keys.
+بينما الطريقة الحرفية لكتابة الكائن "object literal" فى جافاسكريبت اكثر مرونة. حيث لا يجب ان تحيط جميع المفاتيح "keys" السلاسل النصية "string" في طريقة كتابة بعلامات اقتباس مزدوجة (`"`). بدلا من ذلك يمكن احاطتها علامات اقتباس عادية (`'`)، او لا تحيتها بشئ اطلاقا فى حالة المفاتيح "keys".
 
-Here's what the code above might look like as a JavaScript object literal:
+هنا مثال يوضح طريقة الكتابة الحرفية "object literal" للكائن فى جافاسكريبت المذكورة سابقا:
 
 ```js
 const profile = {
@@ -40,14 +40,15 @@ const profile = {
 
 ```
 
-Note that the key  `'favorite-game'`  is wrapped in single quotes. With object literals, you'll need to wrap keys where the words are separated by dashes (`-`) in quotes.
+لاحظ ان المفتاح `'favorite-game'` محاط بعلامة اقتباس عادية "single quotes"، حيث يجب عليك احاطة المفاتيح "keys" المفصولة بشرطات "dashes" بعلامات اقتباس.
 
-If you'd like to avoid quotation marks, you could rewrite the key to use camel case (`favoriteGame`) or separate the words with an underscore (`favorite_game`) instead.
+اذا اردت تجنب استخدام  علامات الاقتباس، يمكن كتابة المفتاح (`favoriteGame`) بطربقة سنام الجمل "camel case" او فصل اجزاء المفتاح (`favorite_game`)  بشرطة سفلية "underscore" (`_`).
 
-### JSON arrays vs JavaScript arrays
+### طريقة كتابة المصفوفات "arrays" فى الـجافاسكريبت مقابل الـJSON
 
-JSON arrays work pretty much the same way as arrays in JavaScript, and can contain strings, booleans, numbers, and other JSON objects. For example:
+طريقة كتابة المصفوفات "arrays" فى الـJSON مثلها مثل جافاسكريبت، ويمكن ان تحمل قيم سلاسل نصية "strings"، القيم المنطقية "booleans"، ارقام وحتى كائنات من نوع الـJSON.
 
+على سبيل المثال
 ```json
 [
   {
@@ -64,9 +65,9 @@ JSON arrays work pretty much the same way as arrays in JavaScript, and can conta
 
 ```
 
-profiles.json
+ملف profiles.json
 
-Here's what that might look like in plain JavaScript:
+وهذا ما يقابلها فى جافاسكريبت
 
 ```js
 const profiles = [
@@ -84,36 +85,36 @@ const profiles = [
 
 ```
 
-## JSON as a string
+## الـJSON هى نص عادى!
 
-You might be wondering, if there are JSON objects and arrays, couldn't you use it in your program like a regular JavaScript object literal or array?
+يمكن ان تتسائل الان، اذا كان هناك كائنات "objects" ومصفوفات "arrays" من نوع الـJSON، اذا لماذا لا يمكن استخدمها مثل الكائنات "objects" والمصفوفات "arrays" فى جافاسكريبت؟
 
-The reason why you can't do this is that JSON is really just a string.
+الاجابة، هى ان الـJSON فى الحقيقة عبارة عن نص عادى!
 
-For example, when you write JSON in a separate file like with  `jane-profile.json`  or  `profiles.json`  above, that file actually contains text in the form of a JSON object or array, which happens to look like JavaScript.
+للتوضيح، عند كتابة الـJSON فى ملف  منفصل مثل `jane-profile.json` او`profiles.json`، فى الحقيقة هذه الملفات هى ملفات نصية عادية من نوع الـJSON، حيث تحتوى كائنات "objects" ومصفوفات "arrays" من نوع JSON والتى بشكلها فقط تشبه جافاسكربت.
 
-And if you make a request to an API, it'll return something like this:
+واذا قمت بإرسال طلب "request" لخادم بيانات "server" من نوع الـAPI، فسوف يرسل لك شئ مثل هذا:
 
 ```
 {"name":"Jane Doe","favorite-game":"Stardew Valley","subscriber":false}
 ```
 
-Just like with text files, if you want to use JSON in your project, you'll need to parse or change it into something your programming language can understand. For instance, parsing a JSON object in Python will create a dictionary.
+وبالتالى، اذا اردت استخدام JSON، فعليك تحويله "parse" او تغيره الى شئ مفهوم للغات البرمجة. على سبيل المثال، عملية تحويل "parsing" كائن من نوع JSON فى لغة مثل Python سوف ينتج عنها فهرس "dictionary".
 
-With that understanding, let's look at different ways to parse JSON in JavaScript.
+مع استيعاب المعلومات السابقة، لنشاهد الان طرق التحويل المختلفة لملفات الـJSON فى جافاسكريبت.
 
-## How to parse JSON in the browser
+## كيفية تحويل الـJSON فى متصفح الانترنت
 
-If you're working with JSON in the browser, you're probably receiving or sending data through an API.
+اذا كنت تتعامل مع JSON من خلال متصفح الانترنت، فأنت على الارجح تستقبل وترسل بيانات من خادم من نوع API.
 
-Let's take a look at a couple of examples.
+لنشاهد الان عدة امثلة.
 
-### How to parse JSON with  `fetch`
+### كيفية تحويل الـJSON فى بأستخدام `fetch`
 
-The easiest way to get data from an API is with  `fetch`, which includes the  `.json()`  method to parse JSON responses into a usable JavaScript object literal or array automagically.
+ايسر طريقة لجلب بيانات من خادم هى بأستخدام `fetch`، حيث تحتوى على دالة "method" تدعى `()json.` لتحويل JSON الى كائن او مصفوفة جافاسكريبت عادية.
 
-Here's some code that uses  `fetch`  to make a  `GET`  request for a developer-themed joke from the free  [Chuck Norris Jokes API](https://api.chucknorris.io/):
-
+دعنا الان نستخدم `fetch` ونقوم بعمل طلب من نوع `GET` لخادم من خلال الرابط التالى
+[Chuck Norris Jokes API](https://api.chucknorris.io):
 ```js
 fetch('https://api.chucknorris.io/jokes/random?category=dev')
   .then(res => res.json()) // the .json() method parses the JSON response into a JS object literal
@@ -121,7 +122,7 @@ fetch('https://api.chucknorris.io/jokes/random?category=dev')
 
 ```
 
-If you run that code in the browser, you'll see something like this logged to the console:
+اذا قمت بتشغيل الكود السابق فى متصفح الانترنت، سوف تظهر هذه البيانات فى لوحة تحكم "console" متصفحك:
 
 ```js
 {
@@ -136,15 +137,15 @@ If you run that code in the browser, you'll see something like this logged to th
 
 ```
 
-While that looks like a JSON object, it's really a JavaScript object literal, and you can use it freely in your program.
+فى الوهلة الاولى يشبه هذا الشكل، شكل كائن "object" من نوع JSON، لكن فى الحقيقة هذا كائن "object" من نوع جافاسكريبت، تستطيع الان استخدامه بدون مشاكل.
 
-### How to stringify JSON with  `JSON.stringify()`
+### تحويل JSON الى نص بأستخدام `()JSON.stringify`
 
-But what if you want to send data to an API?
+لكن ماذا عن إرسال بيانات الى API؟
 
-For instance, say you'd like to send a Chuck Norris joke to the Chuck Norris Jokes API so other people can read it later.
+على سبيل المثال، انت تريد ان ترسل بيانات ما الى خادم Chuck Norris joke API ليستطيع المزيد من الاشخاص استخدام هذه البيانات لاحقا.
 
-First, you'd write your joke as a JS object literal:
+دعنا اولا، نقوم بكتابة كائن "object" من نوع جافاسكريبت، كالاتى:
 
 ```js
 const newJoke = {
@@ -154,9 +155,9 @@ const newJoke = {
 
 ```
 
-Then, since you're sending data to an API, you'd need to turn your  `newJoke`  object literal into a JSON string.
+الان، انت تريد إرسال بيانات API، اذا يجب عليك تحويل الكائن `newJoke` الى JSON اولا.
 
-Fortunately, JavaScript includes a super helpful method to do just that –  `JSON.stringify()`:
+لحسن الحظ، جافا سكريبت تحتوى على دالة "method" مهمة سوف تساعدنا فى ذلك، تدعى `()JSON.stringify`:
 
 ```js
 const newJoke = {
@@ -170,11 +171,12 @@ console.log(typeof JSON.stringify(newJoke)); // string
 
 ```
 
-While we're converting an object literal into a JSON string in this example,  `JSON.stringify()`  also works with arrays.
+بينما يمكن تحويل كائن من نوع جافاسكريبت الى نص من نوع JSON فى هذا المثال، `()JSON.stringify` يمكنها ايضا تحويل المصفوفات.
 
-Finally, you'd just need to send your JSON stringified joke back to the API with a  `POST`  request.
+الان، يمكن إرسال JSON الذى تم تحويله الى نص الى API بأستخدام `POST`.
 
 Note that the Chuck Norris Jokes API doesn't actually have this feature. But if it did, here's what the code might look like:
+لاحظ، Chuck Norris Jokes API لا يملك خاصة التحويل السابقة. لكن فى حالة امتلاكها يمكن ان يصبح الكود كالاتى:
 
 ```js
 const newJoke = {
@@ -196,7 +198,7 @@ fetch('https://api.chucknorris.io/jokes/submit', { // fake API endpoint
   });
 ```
 
-And just like that, you've parsed incoming JSON with  `fetch`  and used  `JSON.stringify()`  to convert a JS object literal into a JSON string.
+سابقا، قمنا بتحويل البيانات القادمة من API بأستخدام `fetch`، وقمنا بعكس العملية بأستخدام `()JSON.stringify`، حيث قمنا بتحويل كائن جافاسكريبت الى نص بصيغة JSON.
 
 ### How to work with local JSON files in the browser
 
