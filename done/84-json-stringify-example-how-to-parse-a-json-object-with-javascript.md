@@ -175,7 +175,6 @@ console.log(typeof JSON.stringify(newJoke)); // string
 
 الان، يمكن إرسال JSON الذى تم تحويله الى نص الى API بأستخدام `POST`.
 
-Note that the Chuck Norris Jokes API doesn't actually have this feature. But if it did, here's what the code might look like:
 لاحظ، Chuck Norris Jokes API لا يملك خاصة التحويل السابقة. لكن فى حالة امتلاكها يمكن ان يصبح الكود كالاتى:
 
 ```js
@@ -200,11 +199,10 @@ fetch('https://api.chucknorris.io/jokes/submit', { // fake API endpoint
 
 سابقا، قمنا بتحويل البيانات القادمة من API بأستخدام `fetch`، وقمنا بعكس العملية بأستخدام `()JSON.stringify`، حيث قمنا بتحويل كائن جافاسكريبت الى نص بصيغة JSON.
 
-### How to work with local JSON files in the browser
+### كيفية التعامل مع ملفات الـJSON المخزنة على جهازك "local" على المتصفح "browser"
+لسوء الحظ، لا يمكن تحميل ملفات الـJSON المحفوظة على جهازك الى المتصفح.
 
-Unfortunately, it's not possible (or advisable) to load a local JSON file in the browser.
-
-`fetch`  will throw an error if you try to load a local file. For example, say you have a JSON file with some jokes:
+حيث سوف تقوم `fetch`  بأظهارة رسالة خطأ فى حالة قمت بأستخدمها لتحميل اى ملفات على جهازك "local". على سبيل المثال، انت تملك الملف المحمل بالبيانات التالية بصيغة الـJSON على جهازك:
 
 ```json
 [
@@ -230,11 +228,11 @@ Unfortunately, it's not possible (or advisable) to load a local JSON file in the
 
 ```
 
-jokes.json
+ملف jokes.json
 
-And you want to parse it and create a list of jokes on a simple HTML page.
+وتريد تحويله "parse" وعمل قائمة لعرضها فى صفحة HTML بسيطة.
 
-If you create a page with the following and open it in your browser:
+وبالفعل قمت بعمل الصفحة التالية وقمت بفتحها فى متصفحك:
 
 ```html
 <!DOCTYPE html>
@@ -254,20 +252,20 @@ If you create a page with the following and open it in your browser:
 
 ```
 
-index.html
+ملف index.html
 
-You'll see this in the console:
+سوف تفاجئ برسالة الخطأ التالية فى لوحة التحكم "console" فى المتصفح:
 
 ```
 Fetch API cannot load file://<path>/jokes.json. URL scheme "file" is not supported
 
 ```
 
-By default, browsers don't allow access to local files for security reasons. This is a good thing, and you shouldn't try to work around this behavior.
+بشكل عام، لا تسمح المتصفحات "browsers" بالوصول للملفات المخزنة على جهازك "local" بسهولة وذلك للأسباب امنية. هذا امر جيد، وبتالى لا تحاول استخدام هذه الطريقة.
 
-Instead, the best thing to do is to convert the local JSON file into JavaScript. Fortunately, this is pretty easy since JSON syntax is so similar to JavaScript.
+بدلا من ذلك، الافضل أن تحول ملفات الـJSON على جهازك "local" الى جافا سكريبت. لحسن الحظ، هذا الطريقة مضمونة وسهلة وذلك لان طريقة الكتابة الخاص بالـJSON مشابهة تماما لجافا سكريبت.
 
-All you need to do is create a new file and declare your JSON as a variable:
+كل ما نريده ان نقوم بعمل ملف جديد كالاتى مع عمل متغير من نوع مصفوفه "Array" يحمل الـJSON الذى نريد كقيمة افتراضية:
 
 ```js
 const jokes = [
@@ -293,10 +291,9 @@ const jokes = [
 
 ```
 
-jokes.js
+ملف jokes.js
 
-And add it to your page as a separate script:
-
+وإرفاقه فى صفحة الـHTML:
 ```html
 <!DOCTYPE html>
 <html>
@@ -314,19 +311,18 @@ And add it to your page as a separate script:
 
 ```
 
-You'll be able to use the  `jokes`  array freely in your code.
+وبالتالى سوف تكون قادر على استخدام المتغير `jokes` بسهولة.
 
-You could also use JavaScript  `[modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules)`  to do the same thing, but that's a bit outside the scope of this article.
+يمكن استخدام وحدات "modules" جافا سكريبت [modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules) لعمل نفس الشئ، لكن هذا خارج نطاق شرحنا الان.
 
-But what if you want to work with local JSON files and have Node.js installed? Let's take a look at how to do that now.
+لكن ماذا عن التعامل مع ملفات الـJSON محليا "local" مع وجود بيئة عمل الـNode.js؟ لنلقى نظرة على هذه الطريقة الجديدة.
 
-## How to parse JSON in Node.js
+## كيفية تحويل JSON مع وجود بيئة عمل الـNode.js
+الـNode.js هى بيئة تشغيل "runtime" للجافا سكريبت، تسمح لك بأستخدام جافا سكريبت خارج المتصفح. لقراءة المزيد [Node.js](https://www.freecodecamp.org/news/the-definitive-node-js-handbook-6912378afc6e/).
 
-Node.js is a JavaScript runtime that allows you to run JavaScript outside of the browser. You can read all about  [Node.js here](https://www.freecodecamp.org/news/the-definitive-node-js-handbook-6912378afc6e/).
+سواء قمت بأستخدام Node.js لتشغيل جافا سكريبت محليا "locally" على جهازك، او تشغيل تطبيق ويب "web applications" كامل على خادم "server" ما، لمن الجيد أن تعرف كيفية التعامل مع JSON.
 
-Whether you use Node.js to run code locally on your computer, or to run entire web applications on a server, it's good to know how to work with JSON.
-
-For the following examples, we'll use the same  `jokes.json`  file:
+فى المثال التالى، سوف نستخدم نفس الملف `jokes.json`:
 
 ```json
 [
@@ -352,20 +348,20 @@ For the following examples, we'll use the same  `jokes.json`  file:
 
 ```
 
-jokes.json
+ملف jokes.json
 
-### How to parse a JSON file with  `require()`
+## كيفية تحويل "parse" الـJSON بأستخدام `()require`
 
-Let's start with the easiest method.
+لنبدأ بالطريقة السهلة.
 
-If you have a local JSON file, all you need to do is use  `require()`  to load it like any other Node.js module:
+اذا كانت تمتلك ملف JSON على جهازك، فكل ما عليك فعله استخدام `()require` لاستخدام ملف JSON كأحد ملفات "module" الـNode.js:
 
 ```js
 const jokes = require('./jokes.json');
 
 ```
 
-The JSON file will be parsed for you automatically and you can start using it in your project:
+ملف الـJSON سوف يتم تحويله "parsed" تلقائيا ويمكن البدأ بأستخدامه بشكل طبيعى فى مشروعك:
 
 ```js
 const jokes = require('./jokes.json');
@@ -374,22 +370,23 @@ console.log(jokes[0].value); // "Chuck Norris's keyboard doesn't have a Ctrl key
 
 ```
 
-Note that this is synchronous, meaning that your program will stop until it parses the entire file before continuing. Really large JSON files can cause your program to slow down, so just be careful with that.
+ملاحظة عملية التحويل والتحميل بأستخدام `()require` هى عملية متزامنة "synchronous"، اى انه البرنامج سوف يتوقف عن العمل لحين تحويل "parses" الملف بشكل كامل، وبالتالى فى ملفات الـJSON كبيرة الحجم سوف تؤثر هذه العملية على سرعة البرنامج بشكل ملحوظ، لذلك وجب التحذير مع هذه الطريقة.
 
-Also, because parsing JSON this way loads the entire thing into memory, it's better to use this method for static JSON files. If the JSON file changes while your program is running, you won't have access to those changes until you restart your program and parse the updated JSON file.
+بالاضافة لذلك، عملية التحويل "parsing" تقوم بتحميل الملف بالكامل للذكرة العشوائية "memory" للمعالجة، لذلك من المستحسن استخدام هذه الطريقة مع الملفات الـJSON التى لا يوجد تغير فى محتواها "static". اذا كان هناك تغير دائما فى ملفات الـJSON  اثناء فترة تشغيل البرنامج، فلن تستطيع الوصول لهذه التغيرات حتى تعيد تشغيل البرنامج و تعيد تحميل ملفات الـJSON بالتغيرات الجديدة.
 
-### How to parse a JSON file with  `fs.readFileSync(`) and  `JSON.parse()`
+### طريقة تحويل "parse" ملف من نوع JSON بأستخدام `()fs.readFileSync` و `()JSON.parse`
 
-This is the more traditional way (for lack of a better term) to parse JSON files in Node.js projects – read the file with  `fs`  (file system) module, then parse with  `JSON.parse()`.
+هذه طريقة تقليدية الى حد ما، لتحول ملفات الـJSON فى مشاريع تستخدم Node.js - استخدم `fs` لقراءة الملفات، وبعدها حول الملفات بأستخدام `()JSON.parse`.
 
-Let's see how to do this with the  `fs.readFileSync()`  method. First, add the  `fs`  module to your project:
+لنر كيف يتم ذلك بأستخدام `()fs.readFileSync`. أولا، قم بإضافة `fs` للمشروع كألاتى:
+
 
 ```js
 const fs = require('fs');
 
 ```
 
-Then, create a new variable to store the output of the  `jokes.json`  file and set it equal to  `fs.readFileSync()`:
+وبعد ذلك، قم بإنشاء متغير "variable" جديد لتخزين ناتج "output" ملف `jokes.json` بأستخدام `()fs.readFileSync`:
 
 ```js
 const fs = require('fs');
@@ -397,23 +394,23 @@ const jokesFile = fs.readFileSync();
 
 ```
 
-`fs.readFileSync()`  takes a couple of arguments. The first is the path to the file you want to read:
+`()fs.readFileSync` يمكنة تمرير له العديد من الخيارات "arguments". اول خيار هو مسار الملف المراد قراءته:
 
 ```js
 const fs = require('fs');
 const jokesFile = fs.readFileSync('./jokes.json');
 
 ```
-
-But if you log  `jokesFile`  to the console now, you'd see something like this:
+والان اذا قمت بعرض محتويات `jokesFile` فى لوحة التحكم "console"، سوف يظهر الاتى:
 
 ```
 <Buffer 5b 0a 20 20 7b 0a 20 20 20 20 22 63 61 74 65 67 6f 72 69 65 73 22 3a 20 5b 22 64 65 76 22 5d 2c 0a 20 20 20 20 22 63 72 65 61 74 65 64 5f 61 74 22 3a ... 788 more bytes>
 ```
 
-That just means that the  `fs`  module is reading the file, but it doesn't know the encoding or format the file is in.  `fs`  can be used to load pretty much any file, and not just text-based ones like JSON, so we need to tell it how the file is encoded.
+هذه يعنى انه تم قراءة الملف بنجاح من طرف `fs`، لكن لم يتم تحديد نوع ترميز "encoding" محدد لذلك يظهر بهذه الطريقة. `fs`  يمكنه قراءة اى نوع من الملفات, وليس فقط الــJSON، لذلك لعرض محتوى الملف بشكل صحيح يجب تحدد نوع الترميز.
 
-For text-based files, the encoding is usually  `utf8`:
+فى حالة الملفات النصية "text-based"، يكون الترميز "encoding" عادة من نوع `utf8`.
+
 
 ```js
 const fs = require('fs');
@@ -421,11 +418,11 @@ const jokesFile = fs.readFileSync('./jokes.json', 'utf8');
 
 ```
 
-Now if you log  `jokesFile`  to the console, you'll see the contents of the file.
+دعنا الان نعرض ناتج `jokesFile`.
 
-But so far we're just reading the file, and it's still a string. We'll need to use another method to parse  `jokesFile`  into a usable JavaScript object or array.
+لهذ الحد نحن نقوم بقراء الملف، و بالطبع لا يزال عبارة عن نص عادى "string". سوف تحتاج طريقة لتحويل `jokesFile` الى كائن "object" جافا سكريبت او مصفوفة "array".
 
-To do that, we'll use  `JSON.parse()`:
+لعمل ذلك نحن فى حاجة ﻷستخدام `()JSON.parse`:
 
 ```js
 const fs = require('fs');
@@ -436,13 +433,13 @@ console.log(jokes[0].value); // "Chuck Norris's keyboard doesn't have a Ctrl key
 
 ```
 
-As the name suggests,  `JSON.parse()`  takes a JSON string and parses it into a JavaScript object literal or array.
+كما يظهر اسم الدالة "method"، يمكن تمرير JSON نصى لـ`()JSON.parse` وسوف تقوم بتحويله الى كائن "object" جافا سكريبت او مصفوفة "array".
 
-Like with the  `require`  method above,  `fs.readFileSync()`  is a synchronous method, meaning it could cause your program to slow down if it's reading a large file, JSON or otherwise.
+ذكرنا سابقا أن `require` متزامنة "synchronous"، ايضا `()fs.readFileSync` كذلك،  اى انه البرنامج سوف يتوقف عن العمل لحين تحويل "parses" الملف بشكل كامل ومن الممكن ان يحدث بطئ البرنامج اذا كان الملف كبير الحجم.
 
-Also, it only reads the file once and loads it into memory. If the file changes, you'll need to read the file again at some point. To make things easier, you might want to create a simple function to read files.
+ايضا، `()fs.readFileSync` تقوم بقراء الملف مرة واحدة فقط وتحمله الى الذكرة "memory". لذلك اى تعديل فى الملف سوف تحتاج الى قراءة الملف مرة اخرى. لجعل الامور اكثر سهولة، لما لا نقوم بأنشاء دالة "function" بسيطة لقراءة الملفات.
 
-Here's what that might look like:
+انظر الى المثال الاتى:
 
 ```js
 const fs = require('fs');
@@ -460,23 +457,21 @@ const jokes2 = JSON.parse(jokesFile2);
 
 console.log(jokes2[0].value); // "Chuck Norris's keyboard is made up entirely of Cmd keys because Chuck Norris is always in command."
 ```
+### ### طريقة تحويل "parse" ملف من نوع JSON بأستخدام `()fs.readFile` و `()JSON.parse`
 
-### How to parse JSON with  `fs.readFile(`) and  `JSON.parse()`
+`()fs.readFile` مشابهة تمام لـ`()fs.readFileSync`، الاختلاف الوحيد انها تعمل بشكل غير متزامن "asynchronously"، سوف يكون هذا ذو نفع فى الملفات كبيرة الحجم.
 
-The  `fs.readFile()`  method is very similar to  `fs.readFileSync()`, except that it works asynchronously. This is great if you have a large file to read and you don't want it to hold up the rest of your code.
-
-Here's a basic example:
-
+انظر الى المثال الاتى:
 ```js
 const fs = require('fs');
 
 fs.readFile('./jokes.json', 'utf8');
 ```
 
-So far this looks similar to what we did with  `fs.readFileSync()`, except we're not assigning it to a variable like  `jokesFile`. Because it's asynchronous, any code after  `fs.readFile()`  it will run before it's finished reading the file.
+يبدو هذا مشابه الى حد ما مع الذى قمنا به فى `()fs.readFileSync`، الاختلاف اننا لا نحفظ الناتج فى متغير مثل  `jokesFile`.
+ولانها عملية غير متزامنه "asynchronous"، اى كود برمجى يأتى بعد `()fs.readFile` سوف ينفذ قبل انتهاء عملية قراءة الملف.
 
-Instead, we'll use a callback function and parse the JSON inside it:
-
+بدلا من ذلك، يمكن عمل دالة "function" من نوع callback و عمل تحويل "parse" لـJSON بداخل الدالة:
 ```js
 const fs = require('fs');
 
@@ -489,8 +484,7 @@ fs.readFile('./jokes.json', 'utf8', (err, data) => {
 
 console.log("This will run first!");
 ```
-
-Which prints the following to the console:
+وسوف يكون الناتج كالاتى:
 
 ```
 This will run first
@@ -498,16 +492,15 @@ Chuck Norris's keyboard doesn't have a Ctrl key because nothing controls Chuck N
 
 ```
 
-Like with  `fs.readFileSync()`,  `fs.readFile()`  loads the file into memory, meaning you'll need to read the file again if it changes.
+تقوم كل من `()fs.readFileSync()`,  `fs.readFile` بتحميل البيانات الى الذكرة "memory"، وبالتالى اى تغير يلزم عنده إعادة قراءة للملف مرة اخرى.
 
-Also, even though  `fs.readFile()`  is asynchronous, it eventually loads the entire file it's reading into memory. If you have a massive file, it may be better to look into  [Node.js streams](https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/)  instead.
+بالفعل `()fs.readFile` تعمل بشكل غير متزامن "asynchronous"، وفى النهاية سوف يتم تحميل الملف بالكامل وتتم عملية القراءة فى الذكرة "memory". لكن اذا كنت تتعامل مع ملفات كبيرة الحجم، فمن الافضل الاطلاع على [Node.js streams](https://www.freecodecamp.org/news/node-js-streams-everything-you-need-to-know-c9141306be93/)
 
-### How to stringify JSON with  `JSON.stringify()`  in Node.js
+### كيف تحول ملفات الـJSON الى ملفات نصية "stringify" بأستخدام `()JSON.stringify` فى Node.js
 
-Finally, if you're parsing JSON with Node.js, there's a good chance that you'll need to return JSON at some point, maybe as an API response.
+فى الخاتمة، اذا كنت تقوم بتحويل JSON بأستخدام Node.js، سوف يكون هناك حاجة لتبادل JSON مع API معين.
 
-Luckily, this works the same way as in the browser – just use  `JSON.stringify()`  to convert JavaScript object literals or arrays into a JSON string:
-
+لحسن الحظ، هذه العملية يمكن القيام بها بأستخدام المتصفح - وذلك بأستخدام `()JSON.stringify` لتحويل كائن "object" جافا سكريبت او مصفوفة "array" لملف JSON نصى "string":
 ```js
 const newJoke = {
   categories: ['dev'],
@@ -517,9 +510,8 @@ const newJoke = {
 console.log(JSON.stringify(newJoke)); // {"categories":["dev"],"value":"Chuck Norris's keyboard is made up entirely of Cmd keys because Chuck Norris is always in command."}
 
 ```
+هنا نحن الان فى نهاية المقال! لقد قمنا بالتعرف على كل شئ يختص بالتعامل مع JSON سواء فى المتصفح "browser" او بيئة عمل Node.js.
 
-And that's it! We've covered just about everything you need to know about working with JSON in the browser and in Node.js projects.
+الان متسلاحا بهذه المعرفة، انطلاق وطبق مع تعلمته فى التعامل مع JSON.
 
-Now get out there and parse or stringify JSON to your heart's content.
-
-Did I miss something? How do you parse JSON in your projects? Let me know over on  [Twitter](https://twitter.com/kriskoishigawa).
+هل نسيت شئ ما؟ كيف تتعامل مع JSON فى مشاريع البرمجية؟ اخبرنى على حسابى [Twitter](https://twitter.com/kriskoishigawa)
