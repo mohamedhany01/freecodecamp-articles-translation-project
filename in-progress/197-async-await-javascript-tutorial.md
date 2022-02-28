@@ -3,37 +3,37 @@
 
 متى تنتهى دالة غير متزامنة "asynchronous function" من وظيفتها؟ ولماذا هذا سؤال صعب الاجابة عليه؟
 
-حسنا اتضح انه لكى تفهم الدوال الغير متزامنة "asynchronous functions" يتطلب فهم جيد لطريقة عمل لغة الجافا سكريبت. 
+حسنا اتضح انه لكى تفهم الدوال الغير متزامنة "asynchronous functions" يتطلب فهم جيد لطريقة عمل لغة الجافا سكريبت.
 
 دعنا نكتشف هذا المبدأ معا، وبالطبع سوف نفهم الكثير عن الجافا سكريبت فى هذه الرحلة.
 
 هل انت جاهز للرحلة؟ حسنا، دعنا نبدأ.
 
-## What is asynchronous code?
+## ما هو الكود الغير متزامن "Asynchronous"؟
 
-By design, JavaScript is a synchronous programming language. This means that when code is executed, JavaScript starts at the top of the file and runs through code line by line, until it is done.
+تم تصميم جافا سكريبت على انها لغة برمجة متزامنة "synchronous"، اى ان الكود عند تشغيله، تبدأ جافا سكريبت بقراءة الكود من الاعلى سطرا سطرا الى نهاية الكود.
 
-The result of this design decision is that only one thing can happen at any one time.
+وكنتيجة لهذا التصميم، تستطيع جافا سكريبت ان تقوم بعمل شئ واحد كل مرة.
 
-You can think of this as if you were juggling six small balls. While you are juggling, your hands are occupied and can't handle anything else.
+يمكنك التفكير في هذا كما لو كنت تتلاعب بست كرات صغيرة. أثناء قيامك باللعب ، تكون يداك مشغولة ولا تستطيع التعامل مع أي شيء آخر.
 
-It's the same with JavaScript: once the code is running, it has its hands full with that code. We call this this kind of synchronous code  _blocking_. Because it's effectively blocking other code from running.
+بالمثل فى جافاسكريبت: بمجرد تشغيل الكود، تكون جافاسكريبت مشغولة بتنفيذ الكود البرمجي. يسمى هذا التأثير/المبدئ بالكود المتزامن او المقيد "synchronous/blocking code". لانه يقوم بتقيد تنفيذ بقية الاكود لحين الانتهاء من الكود الحالى.
 
-Let's circle back to the juggling example. What would happen if you wanted to add another ball? Instead of six balls, you wanted to juggle seven balls. That's might be a problem.
+لنرجع الى مثال التلاعب بالكرات الصغيرة. ماذا سوف يحدث اذا ارت إضافة كرة اخري؟ بدلا من ستة كرات تريد ان يكونوا سبعة. هذه سوف تكون معضلة.
 
-You don't want to stop juggling, because it's just so much fun. But you can't go and get another ball either, because that would mean you'd have to stop.
+فأنت لا تريد ان توقف عملية التلاعب، لانها ممتعة كثيرا بالنسبة لك. وبالطبع لا يمكنك ان تأتى بكرة اخرى، لانه سوف يوقف عملية التلاعب حتما وهذا ما لا تريده.
 
-The solution? Delegate the work to a friend or family member. They aren't juggling, so they can go and get the ball for you, then toss it into your juggling at a time when your hand is free and you are ready to add another ball mid-juggle.
+اذا ما الحل؟ ببساطة يمكن الاستعانة بصديق او احد افراد العائلة متفرغ. لكى يحضر لك الكرة الاضافية، وفى اثناء عملية التلاعب بالكرات وفى منتصف العملية يمكن قذف الكرة الاضافية لكى تستطيع الامساك بها واضافتها لبقية الكرات.
 
-This is what asynchronous code is. JavaScript is delegating the work to something else, then going about it's own business. Then when it's ready, it will receive the results back from the work.
+يمكن وصف العملية السابقة فة عالم جافا سكريبت بالعملية الغير متزامنة "asynchronous". حيث تعمل جافاسكريبت على تفويض العمل الاضافى الى شئ اخر، وتقوم هى بتنفذ عملها فى تشغيل الكود. وبمجرد انتهاء العمل الاضافى، تستقبل جافاسكريبت الناتج النهائى.
 
-## Who is doing the other work?
 
-Alright, so we know that JavaScript is synchronous and lazy. It doesn't want to do all of the work itself, so it farms it out to something else.
+## من المسئول عن العمل الاضافى؟
+حسنا، نعرف الان ان جافاسكريبت متزامنة "synchronous" وكسولة. فى لا تريد ان تقوم بكل العمل لوحدها، لذلك تقوم بإلقاء العمل الاضافة على عاتق شخص اخر.
 
-But who is this mysterious entity that works for JavaScript? And how does it get hired to work for JavaScript?
+لكن من هو هذا الشخص الغامض الذى يعمل لحساب جافاسكريبت؟ وكيف تم تعينه للعمل لحساب جافاسكريبت؟
 
-Well, let's take a look at an example of asynchronous code.
+لننظر الى المثال التالى وهو عبارة عن كود غير متزامن "asynchronous code"
 
 ```javascript
 const logName = () => {
@@ -44,8 +44,7 @@ setTimeout(logName, 0)
 
 console.log("Hi there")
 ```
-
-Running this code results in the following output in the console:
+عند تنفيذ هذا الكود يكون الناتج كالاتى:
 
 ```javascript
 // in console
@@ -53,39 +52,39 @@ Hi there
 Han
 ```
 
-Alright. What is going on?
+ما الذى يحدث هنا؟
 
-It turns out that the way we farm out work in JavaScript is to use environment-specific functions and APIs. And this is a source of great confusion in JavaScript.
+من المثال السابق يتضح ان المسئول عن القيام بالعمل الاضافى لحساب جافاسكريبت هى بعض الدوال المخصوصة ببيئة تشغيل جافا سكريبت "environment-specific functions" و بعض الـAPIs. وبتالى هذا هو مصدر الارباك وعدم الفهم لمفهوم الكود غير متزامن "asynchronous code" فى جافاسكريبت.
 
-**JavaScript always runs in an environment.**
+## جافاسكريبت تعمل دائما فى بيئة عمل محددة!
 
-Often, that environment is the browser. But it can also be on the server with NodeJS. But what on earth is the difference?
+غالبًا ما تكون هذه البيئة هي متصفح الانترنت "browser". ولكن يمكن أن يكون أيضًا على الخادم "server" مع NodeJS. لكن ما هو الفرق؟
 
-The difference – and this is important – is that the browser and the server (NodeJS), functionality-wise, are not equivalent. They are often similar, but they are not the same.
+الاختلاف - وهذا مهم جدا - هو ان المتصفح "browser" والخادم "server" فى حالة NodeJS من حيث الوظائف "functionality-wise"، ليسوا متساوين. غالبًا ما تكون متشابهة ، لكنها ليست كذلك.
 
-Let's illustrate this with an example. Let's say JavaScript is the protagonist of an epic fantasy book. Just an ordinary farm kid.
+دعنا نوضح هذا بمثال. لنفترض ان جافاسكريبت هو بطل رواية خيالية ملحمية. مجرد طفل عادى يعيش فى مزرعة.
 
-Now let's say that this farm kid found two suits of special armor that gave them powers beyond their own.
+بالصدفة يجد بطلنا الصغير بذلتين من نوع خاص تعطى مرتديها قوة تفوق الخيال.
 
-When they used the browser suit of armor, they gained access to a certain set of capabilities.
+عندما يرتدى بطلنا الصغير بذلة المتصفح "browser" للتسلح، يكتسب مباشرة القدرة على الوصول الى قدرات خاصة.
 
-When they used the server suit of armor they gained access to another set of capabilities.
+وعندما يرتدى بطلنا بذلة الخادم "server" للتسلح، يكتسب مباشرة قدرات اخرى خاصة.
 
-These suits have some overlap, because the creators of these suits had the same needs in certain places, but not in others.
+تمتلك هذا البذلات سمات متشابهة، لان صناع هذه البذلات لديهم نفس الاحتياجات في أماكن معينة ، واحتياجات خاصة في أماكن أخرى.
 
-This is what an environment is. A place where code is run, where there exist tools that are built on top of the existing JavaScript language. They are not a part of the language, but the line is often blurred because we use these tools every day when we write code.
+هذا هو المقصود ببيئة تشغيل "environment"، مكان يمكن للكود فيه ان يعمل بشكل صحيح، بالاضافة لوجود ادوات إضافية لمساعدة جافاسكريبت فى عملها. ليست من صميم جافاسكريبت، لكن غالبا لا نلاحظ هذه الفروقات لانشغالنا بكتابة الاكواد كل يوم.
 
-[setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope),  [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API), and  [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model)  are all examples of Web APIs. (You can  [see the full list of Web APIs here.](https://developer.mozilla.org/en-US/docs/Web/API)) They are tools that are built into the browser, and that are made available to us when our code is run.
+[setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)، [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) و [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) كلها امثلة على الـWeb APIs. (يمكن أن [ترى لائحة كاملة عن الـWeb APIs](https://developer.mozilla.org/en-US/docs/Web/API)) كلها ادوات تم دمجها داخل المتصفح "browser"، وتم جعلها متاحة لنا عند كتابة الاكواد بجافاسكريبت فى بيئة المتصفح.
 
-And because we always run JavaScript in an environment, it seems like these are part of the language. But they are not.
+ولاننا نقوم دائما بالعمل داخل بيئة عمل "environment" معينة، يخيل لنا انها جزء من اللغة. لكن هذا غير صحيح بالمرة.
 
-So if you've ever wondered why you can use fetch in JavaScript when you run it in the browser (but need to install a package when you run it in NodeJS), this is why. Someone thought fetch was a good idea, and built it as a tool for the NodeJS environment.
+لذلك اذا تسألت لماذا يمكن استخدام `fetch` فى جافاسكريبت عند العمل داخل المتصفح (لكن تحتاج تنزيل حزمة "package" معينة عند العمل ببيئة الـNodeJS)، فهذا هو السبب. شخص ما خيل له ان `fetch` فكرة جيدة، فبتالى قرر ان يبنى نظير لها فى بيئة  الـNodeJS.
 
-Confusing? Yes!
+لازلت لم تفهم! اجل؟
 
-But now we can finally understand what takes on the work from JavaScript, and how it gets hired.
+الان، فهمنا من هو المساعد المجهول لجافاسكريب، وكيف تم توظيفه للقيام بهذا العمل الاضافى عن جافا سكريبت.
 
-It turns out that it is the environment that takes on the work, and the way to get the environment to do that work, is to use functionality that belongs to the environment. For example  _fetch_  or  _setTimeout_  in the browser environment.
+اتضح أن البيئة هي التي تتولى هذا العمل الاضافى، وكيفية قيام البيئة بهذا العمل، هي استخدام الوظائف المدمجة بها. على سبيل المثال `fetch` أو `setTimeout` في بيئة المتصفح.
 
 ## What happens to the work?
 
@@ -118,7 +117,7 @@ Only when JavaScript is done running all its synchronous code, and is good and r
 So let's take a look at an example:
 
 ```
-setTimeout(() => console.log("hello"), 0) 
+setTimeout(() => console.log("hello"), 0)
 
 fetch("https://someapi/data").then(response => response.json())
                              .then(data => console.log(data))
@@ -185,7 +184,7 @@ One of the big selling points of promises is that we can chain functions that we
 fetch("https://swapi.dev/api/people/1")
 	.then((res) => console.log("This function is run when the request succeeds", res)
     .catch(err => console.log("This function is run when the request fails", err)
-           
+
 // Chaining multiple functions
  fetch("https://swapi.dev/api/people/1")
 	.then((res) => doSomethingWithResult(res))
@@ -208,44 +207,44 @@ const fetch = (url, options) => {
         statusText: xhr.statusText
         ...
     }
-    
+
     resolve(new Response(xhr.response, options))
   }
-  
+
   xhr.onerror = () => {
     reject(new TypeError("Request failed"))
   }
 }
- 
+
  fetch("https://swapi.dev/api/people/1")
    // Register handleResponse to run when promise resolves
 	.then(handleResponse)
   .catch(handleError)
-  
+
  // conceptually, the promise looks like this now:
  // { status: "pending", onsuccess: [handleResponse], onfailure: [handleError] }
-  
+
  const handleResponse = (response) => {
   // handleResponse will automatically receive the response, ¨
   // because the promise resolves with a value and automatically injects into the function
    console.log(response)
  }
- 
+
   const handleError = (response) => {
   // handleError will automatically receive the error, ¨
   // because the promise resolves with a value and automatically injects into the function
    console.log(response)
  }
-  
+
 // the promise will either resolve or reject causing it to run all of the registered functions in the respective arrays
 // injecting the value. Let's inspect the happy path:
-  
+
 // 1. XHR event listener fires
 // 2. If the request was successfull, the onload event listener triggers
 // 3. The onload fires the resolve(VALUE) function with given value
 // 4. Resolve triggers and schedules the functions registered with .then
-  
-  
+
+
 ```
 
 So we can use promises to do asynchronous work, and to be sure that we can handle any result from those promises. That is the value proposition. If you want to know more about promises you can read more about them  [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)  and  [here](https://web.dev/promises/).
@@ -262,7 +261,7 @@ Async/Await is a way of writing promises that allows us to write  _asynchronous 
 const getData = async () => {
     const response = await fetch("https://jsonplaceholder.typicode.com/todos/1")
     const data = await response.json()
-    
+
     console.log(data)
 }
 
@@ -292,7 +291,7 @@ const getData = async () => {
     } catch (err) {
        console.log(err)
     }
-    
+
 }
 
 getData()
@@ -316,7 +315,7 @@ async function getData() {
 }
 
 // getData is a promise
-getData().then(res => console.log(res)).catch(err => console.log(err); 
+getData().then(res => console.log(res)).catch(err => console.log(err);
 ```
 
 This exposes another interesting fact about async / await. When defining a function as async,  _it will always return a promise._
