@@ -74,7 +74,7 @@ Han
 
 هذا هو المقصود ببيئة تشغيل "environment"، مكان يمكن للكود فيه ان يعمل بشكل صحيح، بالاضافة لوجود ادوات إضافية لمساعدة جافاسكريبت فى عملها. ليست من صميم جافاسكريبت، لكن غالبا لا نلاحظ هذه الفروقات لانشغالنا بكتابة الاكواد كل يوم.
 
-[setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)، [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) و [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) كلها امثلة على الـWeb APIs. (يمكن أن [ترى لائحة كاملة عن الـWeb APIs](https://developer.mozilla.org/en-US/docs/Web/API)) كلها ادوات تم دمجها داخل المتصفح "browser"، وتم جعلها متاحة لنا عند كتابة الاكواد بجافاسكريبت فى بيئة المتصفح.
+الـAPIs مثل [setTimeout](https://developer.mozilla.org/en-US/docs/Web/API/setTimeout)، [fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) و [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model) امثلة على الـWeb APIs. (يمكن أن [ترى لائحة كاملة عن الـWeb APIs](https://developer.mozilla.org/en-US/docs/Web/API)) كلها ادوات تم دمجها داخل المتصفح "browser"، وتم جعلها متاحة لنا عند كتابة الاكواد بجافاسكريبت فى بيئة المتصفح.
 
 ولاننا نقوم دائما بالعمل داخل بيئة عمل "environment" معينة، يخيل لنا انها جزء من اللغة. لكن هذا غير صحيح بالمرة.
 
@@ -86,35 +86,35 @@ Han
 
 اتضح أن البيئة هي التي تتولى هذا العمل الاضافى، وكيفية قيام البيئة بهذا العمل، هي استخدام الوظائف المدمجة بها. على سبيل المثال `fetch` أو `setTimeout` في بيئة المتصفح.
 
-## What happens to the work?
+## ماذا حدث للعمل الاضافى؟
 
-Great. So the environment takes on the work. Then what?
+حسنا، عظيم الان علمنا ان العمل الاضافى يكون على عاتق بيئة التشغيل "environment". اذا ماذا بعد ذلك؟
 
-At some point you need to get the results back. But let's think about how this would work.
+في مرحلة ما تحتاج إلى الحصول على النتائج. لكن دعنا نفكر في كيفية عمل ذلك.
 
-Let's go back to the juggling example from the beginning. Imagine you asked for a new ball, and a friend just started throwing the ball at you when you weren't ready.
+دعنا نرجع الى مثال التلاعب بالكرات. تخيل أنك طلبت جلب كرة جديدة ، وبدأ صديقك فى هذا اللحظة في رمي الكرة نحوك عندما لم تكن مستعدًا للالتقاطها.
 
-That would be a disaster. Maybe you could get lucky and catch it and get it into your routine effectively. But theres a large chance that it may cause you to drop all of your balls and crash your routine. Wouldn't it be better if you gave strict instructions on when to receive the ball?
+قد يتحول ذلك لكارثة. ربما يمكنك أن تكون محظوظًا وتلتقطها بشكل سليم. ولكن هناك فرصة كبيرة فى التسبب في إسقاط كل الكرات وفشل عملة التلاعب بالكامل. ألن يكون من الأفضل إذا أعطيت صديقك تعليمات محددة بشأن موعد رمى الكرة؟
 
-As it turns out, there are strict rules surrounding when JavaScript can receive delegated work.
+حسنا، فى عالم جافاسكريبت، هناك قواعد صارمة توضع على عملية إسناد العمل الاضافى.
 
-Those rules are governed by the event loop and involve the microtask and macrotask queue. Yes, I know. It's a lot. But bear with me.
+يتم التحكم بهذه القواعد من قبل حلقة الحدث "event loop" وتتضمن هذه الحلقة قائمة انتظار "queue" للمهام الصغيرة او ذات الاولوية الاقل "microtask" والمهام الكبيرة او ذات الاولوية الاهم "macrotask". يبدوا انها معلومات كثيرة بالنسبة لك. لكن تحمل معي.
 
 ![](https://www.freecodecamp.org/news/content/images/2020/08/autodraw-31_08_2020.png)
 
-Alright. So when we delegate asynchronous code to the browser, the browser takes and runs the code and takes on that workload. But there may be multiple tasks that are given to the browser, so we need to make sure that we can prioritise these tasks.
+عندما يتم اسناد كود برمجي غير متزامن "asynchronous" للمتصفح "browser" يأخذ المتصفح الكود البرمجي ويديره ويتحمل عبء تشغيله بشكل كامل. ولكن قد تكون هناك مهام اكثر يتم اسنادها للمتصفح ، فى هذه الحالة نحتاج إلى طريقة يمكننا بها تحديد أولويات لهذه المهام.
 
-This is where the microtask queue and the macrotask queue come in play. The browser will take the work, do it, then place the result in one of the two queues based on the type of work it receives.
+وهنا يأتى دور قائمة انتظار المهام الكبيرة او ذات الاولوية القصوى "microtask queue" وقائمة انتظار المهام الصغيرة او ذات الاولوية الاقل "macrotask queue". سيأخذ المتصفح الكود البرمجى ويقوم بتنفيذه ، ثم يضع نتيجة هذا الكود في واحدة من قائمتين الانتظار بناءً على درجة اولوية الكود.
 
-Promises, for example, are placed in the microtask queue and have a higher priority.
+على سبيل المثال، الوعود "Promises" يتم وضع نتائجها فى قائمة المهام الكبيرة او ذات الاولوية القصوى "microtask queue".
 
-Events and setTimeout are examples of work that is put in the macrotask queue, and have a lower priority.
+الـEvents وsetTimeout امثلة على اكود برمجية او مهام صغيرة وذات درجة اولوية اقل ويتم وضع نتائجها فى قائمة المهام الصغيرة او ذات الاولوية الاقل "macrotask queue".
 
-Now once the work is done, and is placed in one of the two queues, the event loop will run back and forth and check whether or not JavaScript is ready to receive the results.
+بمجرد الانتهاء من العمل ما ووصل النتائج، يتم وضعه في إحدى قائمتَي الانتظار، وفى هذه اللحظة يتم تشغيل حلقة الحدث "event loop" ذهابًا وإيابًا والتحقق مما إذا كانت جافاسكريبت جاهزه لتلقي النتائج أم لا.
 
-Only when JavaScript is done running all its synchronous code, and is good and ready, will the event loop start picking from the queues and handing the functions back to JavaScript to run.
+عندما تنتهى جافاسكريبت من كل مهامها المتزامنة "synchronous" بالكامل ، وتكون متفرغة وجاهزة، ستبدأ حلقة الحدث "event loop" تلقائيا في الانتقاء من قوائم الانتظار وتسليم نتائج المهام الاضافية إلى جافاسكريبت لعرضها.
 
-So let's take a look at an example:
+لتوضيح، شاهد المثال الاتى:
 
 ```
 setTimeout(() => console.log("hello"), 0)
@@ -124,16 +124,14 @@ fetch("https://someapi/data").then(response => response.json())
 
 console.log("What soup?")
 ```
+ما هو ترتيب نتائج هذا الكود فى رأيك؟
 
-What will the order be here?
-
-1.  Firstly, setTimeout is delegated to the browser, which does the work and puts the resulting function in the macrotask queue.
-2.  Secondly fetch is delegated to the browser, which takes the work. It retrieves the data from the endpoint and puts the resulting functions in the microtask queue.
-3.  Javascript logs out "What soup"?
-4.  The event loop checks whether or not JavaScript is ready to receive the results from the queued work.
-5.  When the console.log is done, JavaScript is ready. The event loop picks queued functions from the microtask queue, which has a higher priority, and gives them back to JavaScript to execute.
-6.  After the microtask queue is empty, the setTimeout callback is taken out of the macrotask queue and given back to JavaScript to execute.
-
+1. فى المقام الاول، يتم إسناد setTimeout الى المتصفح، والذى بدوره يقوم بتنفيذ الكود ووضع نتائجه فى قائمة المهام الصغيرة او ذات الاولوية الاقل "macrotask queue".
+2. ثانيا، يتم إسناد fetch الى المتصفح ايضا، والذى بدوره يقوم بتنفيذ الكود. وايضا بأستقبال البيانات من الـendpoint ووضعها فى قائمة المهام الكبيرة او ذات الاولوية الاقصى "microtask queue".
+3. وبعدها يتم إظهار رسالة "?What soup".
+4. فى هذه اللحظة ستبدأ حلقة الحدث "event loop" تلقائيا بتحقق ما اذا كانت جافاسكريبت جاهزة بتلاقى النتائج الاضافية من قائمة المهام.
+5. بمجرد انتهاء مهمة console.log، تكون جافاسكريبت جاهزة. تبدأ حلقة الحدث "event loop" فى الانتقاء النتائج من قائمة المهام الكبيرة او ذات الاولوية الاقصى "macrotask queue"، وتعطى النتائج لجافا سكريبت لتعرضها.
+6. بعد تفريغ قائمة المهام الكبيرة او ذات الاولوية الاقصى "microtask queue"، تنتقل حلقة الحدث "event loop" الى قائمة انتظار المهام الصغيرة او ذات الاولوية الاقل "macrotask queue"، وفى هذا الحالة تكون نتائج setTimeout جاهزة لتستلمها جافا سكريبت لتنفذها.
 ```
 In console:
 // What soup?
