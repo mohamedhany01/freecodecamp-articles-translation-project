@@ -138,12 +138,13 @@ In console:
 // the data from the api
 // hello
 ```
+## الوعود "Promises" فى جافاسكريبت
 
-## Promises
+اخذنا فكرة جيدة عن ما هية الكود الغير متزامن "asynchronous code" وكيف يتم التعامل معه بواسطة جافاسكريبت وبيئة التشغيل "المتصفح". لان لنتطرق لموضوع جديد وهو الوعود "Promises"
 
-Now you should have a good deal of knowledge about how asynchronous code is handled by JavaScript and the browser environment. So let's talk about promises.
+الوعد "Promise" فى جافا سكريبت يمثل قيمة مجهولة سوف يتم الحصول عليها فى المستقبل "مدة زمنية". فى الاساس الوعد "Promise" هو ميثاق بينك وبين جافاسكريبت على ارجاع قيمة ما. من الممكن ان يكون طلب بيانات من API محدد، او قد يكون خطأ ناتج عن فشل فى طلب بيانات من الانترنت. فى كلا الحالتين انت بتأكيد سوف تحصل على قيمة ما.
 
-A promise is a JavaScript construct that represents a future unknown value. Conceptually, a promise is just JavaScript promising to return  _a value_. It could be the result from an API call, or it could be an error object from a failed network request. You're guaranteed to get something.
+انظر الى المثال التالى:
 
 ```
 const promise = new Promise((resolve, reject) => {
@@ -162,20 +163,23 @@ promise.then(res => {
 	console.log(err)
 })
 ```
+يمكن ترجمة الوعد "promise" الى الحالات الاتية
 
-A promise can have the following states:
+-  وعد تم الوفاء به "fulfilled" - عمل تم تنفيذ بشكل ناجح.
+-   وعد تم كسره "rejected" - عمل لم يتم تنفيذ بشكل ناجح.
+-   وعد فى الانتظار "pending" - لم يتم اتخذ اى إجراء.
+-   وعد مبهم "settled" - اما تم الوفاء به او تم كسره.
 
--   fulfilled - action successfully completed
--   rejected - action failed
--   pending - neither action has been completed
--   settled - has been fulfilled or rejected
+عند تنفيذ "promise" وعد ما يجب اما يتم الوفاء به "resolve" او يتم كسره "reject"
 
-A promise receives a resolve and a reject function that can be called to trigger one of these states.
+افتراضيا, توفر الوعود "promises" دوال "functions" ليتم تطبيق الوعد، اما يتم الوفاء به "resolve" فى حالة النجاح او يتم كسره "reject" فى حالة الفشل.
 
-One of the big selling points of promises is that we can chain functions that we want to happen on success (resolve) or failure (reject):
+ احد مميزات الوعود "promises" هو انه يمكن عمل سلسة "chain" من الدوال "functions" للاستجابة لكل من حالة النجاج "resolve" او حالة الفشل "reject":
 
--   To register a function to run on success we use .then
--   To register a function to run on failure we use .catch
+-  لتفعيل دالة "function" فى حالة النجاح والحصول على النتائج نستخدم then.
+-  لتفعيل دالة "function" فى حالة النجاح والحصول على النتائج نستخدم catch.
+
+شاهد المثال التالى:
 
 ```javascript
 // Fetch returns a promise
@@ -190,7 +194,7 @@ fetch("https://swapi.dev/api/people/1")
     .catch((err => doSomethingWithErr(err))
 ```
 
-Perfect. Now let's take a closer look at what this looks like under the hood, using fetch as an example:
+ممتاز, والان لنأخذ نظرة اقرب لما يحدث خلف الكواليس، وسوف نستخدم دالة fetch فى المثال:
 
 ```javascript
 const fetch = (url, options) => {
@@ -245,11 +249,11 @@ const fetch = (url, options) => {
 
 ```
 
-So we can use promises to do asynchronous work, and to be sure that we can handle any result from those promises. That is the value proposition. If you want to know more about promises you can read more about them  [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)  and  [here](https://web.dev/promises/).
+كما شاهدنا يمكن استخدام الوعود "promises" لخلق كود غير متزامن "asynchronous"، وكيف التعامل مع نتائج الوعود. اذا اردت الاطلاع اكثر عن الوعود اقرأ عنها [هنا](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) و[هنا](https://web.dev/promises/)
 
-When we use promises, we chain our functions onto the promise to handle the different scenarios.
+عند استخدام الوعود "promises"، يمكن عمل سلسة "chain" من الدوال "functions" لتعامل مع ردود مختلفة للوعود.
 
-This works, but we still need to handle our logic inside callbacks (nested functions) once we get our results back. What if we could use promises but write synchronous looking code? It turns out we can.
+هذا جيد، لكن نحتاج طريقة لتعامل مع الكود داخل نتائج الوعود "callbacks" بمجرد الحصول على النتائج. ماذا لو استطعنا استخدام الوعود ولكن فى نفس الوقت كتابة كود متزامن "synchronous" المظهر؟ اتضح أننا نستطيع ذلك.
 
 ## Async/Await
 
