@@ -257,7 +257,7 @@ const fetch = (url, options) => {
 
 ## Async/Await
 
-Async/Await is a way of writing promises that allows us to write  _asynchronous code in a synchronous way._ Let's have a look.
+بأستخدام كل من Async/Await يمكن كتابة الـpromises بطريقة مختلفة نسبيا، حيث يمكن كتابة الـAsynchronous code بطريقة او اسلوب مشابه لـSynchronous code. دعنا نلقى نظرة.
 
 ```
 const getData = async () => {
@@ -270,19 +270,19 @@ const getData = async () => {
 getData()
 ```
 
-Nothing has changed under the hood here. We are still using promises to fetch data, but now it looks synchronous, and we no longer have .then and .catch blocks.
+لم يختلف اى شئ فى هذا المثال عن سابقه. لازالنا نستخدم الـpromises لجلب البيانات، لكن طريقة الكتابة اصبحت شبية بالـsynchronous الى حد ما، ولم نعد فى حاجة لأستخدام `then.` و `catch.`
 
-Async / Await is actually just syntactic sugar providing a way to create code that is easier to reason about, without changing the underlying dynamic.
+اسلوب Async / Await هو طريقة مبسطة لكتابة كود يسهل التفكير فيه، دون تغيير الديناميكية الأساسية لمبدء الـpromises.
 
-Let's take a look at how it works.
+لنلقى نظرية كيف يعمل.
 
-Async/Await lets us use  [generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator)  to  _pause_  the execution of a function. When we are using async / await we are not blocking because the function is yielding the control back over to the main program.
+خلف الكواليس، تمكنا طريقة Async/Await من استخدام الـ[generators](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator) لوقف تنفيذ function ما مؤقتا. عند استخدام Async/Await لن يتوقف الكود عن العمل لان الـfunction ترجع التحكم الكامل بالكود الى البرنامح الرئيسي المسؤول عن التنفيذ.
 
-Then when the promise resolves we are using the generator to yield control back to the asynchronous function with the value from the resolved promise.[](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch4.md)
+وبعدها، عندما يتم تنفيذ الـpromise نستخدم الـgenerator مرة اخرى لاعادة التحكم مرة اخري لـasynchronous function بالاضافة الى البيانات العادة من تنفيذ الـpromise.
 
-[You can read more here for a great overview](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch4.md)  of generators and asynchronous code.
+لمعرفة تفاصيل اكثر عن هذه المفاهيم اقرأ [هنا](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/async%20%26%20performance/ch4.md).
 
-In effect, we can now write asynchronous code that looks like synchronous code. Which means that it is easier to reason about, and we can use synchronous tools for error handling such as try / catch:
+في الواقع ، يمكننا الآن كتابة كود asynchronous يشبه الكود synchronous. مما يسهل كتابة والتفكير فى الكود، ويمكننا استخدام try / catch لمعالجة الاخطاء المتوقعة:
 
 ```javascript
 const getData = async () => {
@@ -299,17 +299,16 @@ const getData = async () => {
 getData()
 ```
 
-Alright. So how do we use it? In order to use async / await we need to prepend the function with async. This does not make it an asynchronous function, it merely allows us to use await inside of it.
+والان. فكيف نستخدمها؟ من أجل استخدام async / await، نحتاج إضافة كلمة async الى الـfunction المراد استخدمها. هذا لا يجعل الـfunction غير متزامنة "asynchronous"، لكن يسمح لنا باستخدام كلمة await داخلها.
 
-Failing to provide the async keyword will result in a syntax error when trying to use await inside a regular function.
-
+بدون استخدام كلمة async مع الـfunction سوف ينتج رسالة خطأ عند استخدام كلمة await داخل الـfunction.
 ```javascript
 const getData = async () => {
 	console.log("We can use await in this function")
 }
 ```
 
-Because of this, we can not use async / await on top level code. But async and await are still just syntactic sugar over promises. So we can handle top level cases with promise chaining:
+ولهذا السبب، لا يمكن استخدام async / await مع الكود العادى. لكن async / await هى مجرد طريقة مبسطة عن استخدام الـpromises. لكن يمكن استخدام التسلسل "promise chaining" مع ناتج العائد من async / await.
 
 ```
 async function getData() {
@@ -320,18 +319,20 @@ async function getData() {
 getData().then(res => console.log(res)).catch(err => console.log(err);
 ```
 
-This exposes another interesting fact about async / await. When defining a function as async,  _it will always return a promise._
+الحقيقة المثير عن async / await. ان الـfunction المستخدم بها async / await سوف ترجع دائما promise كنتيجة.
 
-Using async / await can seem like magic at first. But like any magic, it's just sufficiently advanced technology that has evolved over the years. Hopefully now you have a solid grasp of the fundamentals, and can use async / await with confidence.
+تعمل طريقة async / await كالسحر عند استخدامك لها فى الوهلة الاولى. لكن مثل اى السحر، يزول اثره بإنكشاف اسراره. تنقنية async / await  مجرد تقنية متقدمة تقدمها جافاسكريبت، تطورت على مر السنين. نأمل الآن أن يكون لديك فهم قوي لكيفة استخدمها  واساس عملها.
 
-# Conclusion
+# الخاتمة
 
-If you made it here, congrats. You just added a key piece of knowledge about JavaScript and how it works with its environments to your toolbox.
+اذا نجت فى الوصول الى هذه النقطة، تهاني الحارة. انت الان تملك معرفة إضافية عن جافاسكريبت وكيفية عملها فى بيئة التشغيل الخاصة بها.
 
-This is definitely a confusing subject, and the lines are not always clear. But now you hopefully have a grasp on how JavaScript works with asynchronous code in the browser, and a stronger grasp over both promises and async / await.
+هذه المواضيع مربكة للبعض احيانا، والمعلومات المتوفرة ليست واضحة دائمًا. ولكن الآن نأمل أن يكون لديك فهم حول كيفية عمل جافاسكريبت مع الـasynchronous code في المتصفح ، وفهم أقوى لكل من الـpromises و طريقة async / await.
 
-If you enjoyed this article, you might also enjoy my  [youtube channel](https://www.youtube.com/channel/UCZTeUahnA2GMoo_YpTBFo9A?view_as=subscriber). I currently have a  [web fundamentals series](https://www.youtube.com/watch?v=kmvg9C8hVa0&list=PL_kr51suci7XVVw4SJLZ0QQBAsL2K8Opy) going where I go through  [HTTP](https://www.youtube.com/watch?v=0ykAOzJb-U8&t=19s),  [building web servers from scratch](https://www.youtube.com/watch?v=R5uwuG1wPR8)  and more.
+اذا اسمتعت بهذا المقال، يمكن ان تحب [قناتى](https://www.youtube.com/channel/UCZTeUahnA2GMoo_YpTBFo9A?view_as=subscriber) على يوتيوب. حاليا لدى سلسة عن[ اساسيات الويب](https://www.youtube.com/watch?v=kmvg9C8hVa0&list=PL_kr51suci7XVVw4SJLZ0QQBAsL2K8Opy)، حيث اتحدث عن [HTTP](https://www.youtube.com/watch?v=0ykAOzJb-U8&t=19s) و[بناء خوادم الويب من البداية](https://www.youtube.com/watch?v=R5uwuG1wPR8) والكثير ايضا.
 
-There's also a series going on  [building an entire app with React](https://www.youtube.com/playlist?list=PL_kr51suci7WkVde-b09G4XHEWQrmzcpJ), if that is your jam. And I plan to add much more content here in the future going in depth on JavaScript topics.
+ايضا لدى سلسلة عن [بناء تطبيق ويب بأستخدام ReactJS](https://www.youtube.com/playlist?list=PL_kr51suci7WkVde-b09G4XHEWQrmzcpJ). وأخطط لإضافة المزيد من المحتوى في المستقبل بالتعمق في موضوعات جافاسكريبت
 
-And if you want to say hi or chat about web development, you could always reach out to me on twitter at @foseberg. Thanks for reading!
+ولا تنسى متابعتى على تويتر @foseberg.
+
+شكرا للقراء
